@@ -2,6 +2,9 @@
 
 **Disclaimer:** This is documentation for MLB's undocumented public API. I am not affiliated with MLB. Use responsibly and follow MLB's terms of service.
 
+[![CI](https://github.com/pseudo-r/Public-MLB-API/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/pseudo-r/Public-MLB-API/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 ---
 
 ## ☕ Support This Project
@@ -473,6 +476,8 @@ curl "https://statsapi.mlb.com/api/v1/jobs?jobType=UMP&sportId=1&date=2025-04-15
 ---
 
 
+## Parameters Reference
+
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `sportId` | integer | `1` = MLB, `11` = AAA, `12` = AA, `13` = A+, `14` = A, `16` = ROK |
@@ -562,16 +567,18 @@ The `<data_key>` matches the resource name (e.g., `teams`, `people`, `schedules`
 | File | Description |
 |------|-------------|
 | [docs/sports_leagues.md](docs/sports_leagues.md) | Sports, leagues, and divisions |
-| [docs/teams.md](docs/teams.md) | Teams, rosters, team stats |
+| [docs/teams.md](docs/teams.md) | Teams, rosters, history, affiliates, alumni, coaches |
 | [docs/schedule.md](docs/schedule.md) | Schedule and game discovery |
 | [docs/standings.md](docs/standings.md) | Division standings |
-| [docs/people.md](docs/people.md) | Player profiles, stats, search |
-| [docs/game.md](docs/game.md) | Live feed, boxscore, linescore, play-by-play |
+| [docs/people.md](docs/people.md) | Player profiles, stats, bulk lookup, free agents |
+| [docs/game.md](docs/game.md) | Live feed (v1 + v1.1), boxscore, linescore, diffPatch |
 | [docs/venues.md](docs/venues.md) | Stadiums and field dimensions |
 | [docs/draft.md](docs/draft.md) | MLB Draft results |
 | [docs/transactions.md](docs/transactions.md) | Trades, signings, IL moves |
 | [docs/stats.md](docs/stats.md) | Statistical leaders and aggregates |
 | [docs/reference.md](docs/reference.md) | Positions, game types, awards, attendance, umpires |
+| [docs/seasons.md](docs/seasons.md) | Season date windows |
+| [docs/gamepace_highlow.md](docs/gamepace_highlow.md) | Game pace, high-low records, Home Run Derby |
 
 ---
 
@@ -582,3 +589,7 @@ See [CHANGELOG.md](CHANGELOG.md) for version history.
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for how to contribute endpoint discoveries, corrections, and improvements.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
