@@ -21,6 +21,7 @@ If this documentation has saved you time, consider supporting ongoing developmen
 - [Base URL](#base-url)
 - [Quick Start](#quick-start)
 - [Authentication](#authentication)
+- [API Versioning](#api-versioning)
 - [API Endpoint Patterns](#api-endpoint-patterns)
   - [Sports & Leagues](#sports--leagues)
   - [Teams](#teams)
@@ -32,6 +33,7 @@ If this documentation has saved you time, consider supporting ongoing developmen
   - [Draft](#draft)
   - [Transactions](#transactions)
   - [Stats](#stats)
+  - [Reference](#reference)
 - [Parameters Reference](#parameters-reference)
 - [Docs](docs/)
 - [CHANGELOG](CHANGELOG.md)
@@ -87,7 +89,21 @@ No authentication is required. No API key, token, or header is needed for any of
 
 ---
 
-## API Endpoint Patterns
+## API Versioning
+
+> **v1 is the only active version.** All documented endpoints use `/api/v1/`.
+
+Live tests confirmed:
+
+| Version path | Status |
+|-------------|--------|
+| `/api/v1/` | ✅ Active — all endpoints work here |
+| `/api/v2/` | ❌ Dead — all routes return 404 |
+| `/api/v3/` | ❌ Dead — all routes return 404 |
+
+MLB's Stats API does not have a versioning scheme with separate v2/v3 branches the way ESPN's Core API does. All current and future endpoints live under `/api/v1/`.
+
+---
 
 ### Sports & Leagues
 
@@ -419,7 +435,43 @@ curl "https://statsapi.mlb.com/api/v1/stats/leaders?leaderCategories=battingAver
 
 ---
 
-## Parameters Reference
+### Reference
+
+> See [docs/reference.md](docs/reference.md) for full details.
+
+| Endpoint | Description |
+|----------|-------------|
+| `GET /positions` | All position codes and types |
+| `GET /gameTypes` | All game type codes |
+| `GET /awards` | Awards list (MVP, Cy Young, etc.) |
+| `GET /awards/{awardId}/recipients` | Award winners |
+| `GET /attendance` | Team/league attendance records |
+| `GET /jobs` | Umpire crew assignments |
+| `GET /schedule/postseason` | Postseason bracket |
+| `GET /schedule/postseason/series` | Postseason series breakdown |
+
+```bash
+# All positions
+curl "https://statsapi.mlb.com/api/v1/positions"
+
+# All game type codes
+curl "https://statsapi.mlb.com/api/v1/gameTypes"
+
+# All MLB awards
+curl "https://statsapi.mlb.com/api/v1/awards?sportId=1"
+
+# 2024 Cy Young recipients
+curl "https://statsapi.mlb.com/api/v1/awards/MLBCY/recipients?season=2024"
+
+# Dodgers 2024 attendance
+curl "https://statsapi.mlb.com/api/v1/attendance?teamId=119&season=2024&gameType=R"
+
+# Umpire assignments
+curl "https://statsapi.mlb.com/api/v1/jobs?jobType=UMP&sportId=1&date=2025-04-15"
+```
+
+---
+
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
@@ -509,16 +561,17 @@ The `<data_key>` matches the resource name (e.g., `teams`, `people`, `schedules`
 
 | File | Description |
 |------|-------------|
-| [docs/sports_leagues.md](docs/sports_leagues.md) | Sports and leagues endpoints |
-| [docs/teams.md](docs/teams.md) | Teams and roster endpoints |
-| [docs/schedule.md](docs/schedule.md) | Schedule and game discovery endpoints |
-| [docs/standings.md](docs/standings.md) | Standings endpoints |
-| [docs/people.md](docs/people.md) | Player profile and stats endpoints |
-| [docs/game.md](docs/game.md) | Live game feed, boxscore, linescore, play-by-play |
-| [docs/venues.md](docs/venues.md) | Venue and stadium endpoints |
-| [docs/draft.md](docs/draft.md) | MLB Draft endpoints |
-| [docs/transactions.md](docs/transactions.md) | Transaction and roster move endpoints |
+| [docs/sports_leagues.md](docs/sports_leagues.md) | Sports, leagues, and divisions |
+| [docs/teams.md](docs/teams.md) | Teams, rosters, team stats |
+| [docs/schedule.md](docs/schedule.md) | Schedule and game discovery |
+| [docs/standings.md](docs/standings.md) | Division standings |
+| [docs/people.md](docs/people.md) | Player profiles, stats, search |
+| [docs/game.md](docs/game.md) | Live feed, boxscore, linescore, play-by-play |
+| [docs/venues.md](docs/venues.md) | Stadiums and field dimensions |
+| [docs/draft.md](docs/draft.md) | MLB Draft results |
+| [docs/transactions.md](docs/transactions.md) | Trades, signings, IL moves |
 | [docs/stats.md](docs/stats.md) | Statistical leaders and aggregates |
+| [docs/reference.md](docs/reference.md) | Positions, game types, awards, attendance, umpires |
 
 ---
 

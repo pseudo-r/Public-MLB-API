@@ -20,7 +20,8 @@ All notable changes to the Public MLB API documentation are listed here.
 - **`docs/draft.md`** — MLB Draft endpoints with pick-level field reference
 - **`docs/transactions.md`** — Transactions endpoint with type code reference
 - **`docs/stats.md`** — Statistical leaders and aggregates with category reference
-- **`CONTRIBUTING.md`** — Contribution guidelines and verification level definitions
+- **`docs/reference.md`** — Positions, game types, awards, attendance, and umpire job endpoints
+- **API versioning confirmed** — live-tested v1, v2, v3 paths; v2 and v3 return 404 (v1-only API)
 - **`CHANGELOG.md`** (this file)
 
 #### Verified Endpoints (live-tested against `statsapi.mlb.com`)
