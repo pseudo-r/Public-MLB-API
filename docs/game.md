@@ -194,3 +194,132 @@ curl "https://statsapi.mlb.com/api/v1/game/745444/content"
 **Response top-level keys:** `copyright`, `link`, `editorial`, `media`, `highlights`, `summary`, `gameNotes`
 
 `highlights.highlights.items[]` contains video highlight objects with `title`, `blurb`, `type`, `date`, `duration`, and nested `playbacks[]` (different quality streams).
+
+---
+
+## Live Feed – DiffPatch (v1.1)
+
+**UNVERIFIED** — Returns a JSON diff patch of the live game feed between two timestamps. Useful for polling changes without re-fetching the entire feed.
+
+> **Note:** This endpoint uses `/api/v1.1/` — a real sub-version used only for game feed endpoints.
+
+**Endpoint:** `GET /api/v1.1/game/{gamePk}/feed/live/diffPatch`
+
+| Parameter | Required | Description | Example |
+|-----------|----------|-------------|---------|
+| `startTimecode` | ✅ | Start timecode from `/timestamps` | `20250415_001234` |
+| `endTimecode` | ✅ | End timecode | `20250415_001345` |
+
+```bash
+# Get list of timecodes first
+curl "https://statsapi.mlb.com/api/v1.1/game/745444/feed/live/timestamps"
+
+# Then poll for changes between two timecodes
+curl "https://statsapi.mlb.com/api/v1.1/game/745444/feed/live/diffPatch?startTimecode=20241005_012345&endTimecode=20241005_012400"
+```
+
+> **Polling pattern:** Fetch `/timestamps`, pick the last timecode, wait N seconds, fetch `/diffPatch` with the old and new timecodes to get only what changed.
+
+---
+
+## Live Feed – Timestamps (v1.1)
+
+**UNVERIFIED** — Returns all available play timestamps for a game. Use with diffPatch for efficient polling.
+
+**Endpoint:** `GET /api/v1.1/game/{gamePk}/feed/live/timestamps`
+
+```bash
+curl "https://statsapi.mlb.com/api/v1.1/game/745444/feed/live/timestamps"
+```
+
+Returns a JSON array of timecode strings.
+
+---
+
+## Game Changes
+
+**UNVERIFIED** — Returns games that have changed data since a given timestamp. Useful for syncing a local database.
+
+**Endpoint:** `GET /game/changes`
+
+| Parameter | Required | Description | Example |
+|-----------|----------|-------------|---------|
+| `updatedSince` | ✅ | ISO 8601 timestamp | `2025-04-15T12:00:00Z` |
+| `sportId` | ❌ | Sport filter | `1` |
+| `gameType` | ❌ | Game type | `R` |
+| `season` | ❌ | Season year | `2025` |
+| `fields` | ❌ | Fields to return | — |
+
+```bash
+curl "https://statsapi.mlb.com/api/v1/game/changes?updatedSince=2025-04-15T12:00:00Z&sportId=1"
+```
+
+---
+
+## Context Metrics
+
+**UNVERIFIED** — Returns current win probability and leverage index for a game. Lighter than `winProbability` (current state only).
+
+**Endpoint:** `GET /game/{gamePk}/contextMetrics`
+
+| Parameter | Required | Description | Example |
+|-----------|----------|-------------|---------|
+| `timecode` | ❌ | State at a specific timecode | `20250415_234512` |
+| `fields` | ❌ | Fields to return | — |
+
+```bash
+curl "https://statsapi.mlb.com/api/v1/game/745444/contextMetrics"
+```
+
+> **Tip:** Prefer `contextMetrics` over `winProbability` for current in-game win probability — it's lighter and returns only the current state.
+
+---
+
+## Game Uniforms
+
+**UNVERIFIED** — Returns uniform information for one or more games.
+
+**Endpoint:** `GET /uniforms/game`
+
+| Parameter | Required | Description | Example |
+|-----------|----------|-------------|---------|
+| `gamePks` | ✅ | Comma-separated game PKs | `745444,745445` |
+| `fields` | ❌ | Fields to return | — |
+
+```bash
+curl "https://statsapi.mlb.com/api/v1/uniforms/game?gamePks=745444"
+```
+
+---
+
+## Color Feed
+
+**UNVERIFIED** — Returns color/audio/broadcast-related metadata for a game.
+
+**Endpoint:** `GET /game/{gamePk}/feed/color`
+
+```bash
+curl "https://statsapi.mlb.com/api/v1/game/745444/feed/color"
+
+# DiffPatch for color feed
+curl "https://statsapi.mlb.com/api/v1/game/745444/feed/color/diffPatch?startTimecode=...&endTimecode=..."
+
+# Timestamps for color feed
+curl "https://statsapi.mlb.com/api/v1/game/745444/feed/color/timestamps"
+```
+
+---
+
+## Player Game Stats
+
+**UNVERIFIED** — Returns stats for a specific player in a specific game.
+
+**Endpoint:** `GET /people/{personId}/stats/game/{gamePk}`
+
+```bash
+# Ohtani's stats in game 745444
+curl "https://statsapi.mlb.com/api/v1/people/660271/stats/game/745444"
+
+# Use "current" for live in-progress game
+curl "https://statsapi.mlb.com/api/v1/people/660271/stats/game/current"
+```

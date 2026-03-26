@@ -200,3 +200,80 @@ curl "https://statsapi.mlb.com/api/v1/people/search?names=Freeman&active=true&sp
 | `477132` | Albert Pujols | — |
 | `543037` | Gerrit Cole | NYY |
 | `669203` | Adley Rutschman | BAL |
+
+---
+
+## Bulk People Lookup
+
+**UNVERIFIED** — Returns multiple player profiles in a single request using `personIds`.
+
+**Endpoint:** `GET /people`
+
+| Parameter | Required | Description | Example |
+|-----------|----------|-------------|---------|
+| `personIds` | ✅ | Comma-separated player IDs | `660271,592450,665742` |
+| `hydrate` | ❌ | Sub-resources to embed | `currentTeam,stats(group=[hitting],type=[season])` |
+| `fields` | ❌ | Fields to return | — |
+
+```bash
+# Fetch Ohtani, Judge, and Soto in one request
+curl "https://statsapi.mlb.com/api/v1/people?personIds=660271,592450,665742"
+
+# With current season hitting stats
+curl "https://statsapi.mlb.com/api/v1/people?personIds=660271,592450&hydrate=stats(group=[hitting],type=[season],season=2025)"
+```
+
+---
+
+## People Changes
+
+**UNVERIFIED** — Returns players whose data has changed since a given timestamp.
+
+**Endpoint:** `GET /people/changes`
+
+| Parameter | Required | Description | Example |
+|-----------|----------|-------------|---------|
+| `updatedSince` | ❌ | ISO 8601 timestamp | `2025-04-01T00:00:00Z` |
+| `fields` | ❌ | Fields to return | — |
+
+```bash
+curl "https://statsapi.mlb.com/api/v1/people/changes?updatedSince=2025-04-01T00:00:00Z"
+```
+
+---
+
+## People Free Agents
+
+**UNVERIFIED** — Returns the current list of free agents.
+
+**Endpoint:** `GET /people/freeAgents`
+
+| Parameter | Required | Description | Example |
+|-----------|----------|-------------|---------|
+| `order` | ❌ | Sort order | `asc` |
+| `hydrate` | ❌ | Sub-resources | `person` |
+| `fields` | ❌ | Fields to return | — |
+
+```bash
+curl "https://statsapi.mlb.com/api/v1/people/freeAgents"
+```
+
+---
+
+## Sports Players
+
+**UNVERIFIED** — Returns all players for a sport, optionally filtered by season.
+
+**Endpoint:** `GET /sports/{sportId}/players`
+
+| Parameter | Required | Description | Example |
+|-----------|----------|-------------|---------|
+| `sportId` | ✅ (path) | Sport ID | `1` |
+| `season` | ❌ | Season year | `2025` |
+| `gameType` | ❌ | Game type | `R` |
+| `fields` | ❌ | Fields to return | — |
+
+```bash
+# All MLB players for 2025
+curl "https://statsapi.mlb.com/api/v1/sports/1/players?season=2025"
+```

@@ -141,3 +141,113 @@ curl "https://statsapi.mlb.com/api/v1/teams/119/stats?stats=season&group=pitchin
 # Dodgers home run leaders 2025
 curl "https://statsapi.mlb.com/api/v1/teams/119/leaders?leaderCategories=homeRuns&season=2025"
 ```
+
+---
+
+## Teams History
+
+**UNVERIFIED** — Returns historical team information (name changes, relocations).
+
+**Endpoint:** `GET /teams/history`
+
+| Parameter | Required | Description | Example |
+|-----------|----------|-------------|---------|
+| `teamIds` | ✅ | Team ID(s) | `119` |
+| `startSeason` | ❌ | Start season | `1900` |
+| `endSeason` | ❌ | End season | `2025` |
+| `fields` | ❌ | Fields to return | — |
+
+```bash
+curl "https://statsapi.mlb.com/api/v1/teams/history?teamIds=119"
+```
+
+---
+
+## Teams Affiliates
+
+**UNVERIFIED** — Returns team affiliations (MLB team → MiLB affiliates).
+
+**Endpoint:** `GET /teams/affiliates`
+
+| Parameter | Required | Description | Example |
+|-----------|----------|-------------|---------|
+| `teamIds` | ✅ | MLB team ID | `119` |
+| `sportId` | ❌ | Sport filter | `1` |
+| `season` | ❌ | Season year | `2025` |
+| `fields` | ❌ | Fields to return | — |
+
+```bash
+# Dodgers minor league affiliates
+curl "https://statsapi.mlb.com/api/v1/teams/affiliates?teamIds=119&season=2025"
+```
+
+---
+
+## Team Alumni
+
+**UNVERIFIED** — Returns alumni (former players) for a team.
+
+**Endpoint:** `GET /teams/{teamId}/alumni`
+
+| Parameter | Required | Description | Example |
+|-----------|----------|-------------|---------|
+| `teamId` | ✅ (path) | Team ID | `119` |
+| `season` | ✅ | Season year | `2024` |
+| `group` | ❌ | `hitting`, `pitching`, `fielding` | `hitting` |
+| `hydrate` | ❌ | Sub-resources | `person` |
+| `fields` | ❌ | Fields to return | — |
+
+```bash
+# Dodgers 2024 alumni
+curl "https://statsapi.mlb.com/api/v1/teams/119/alumni?season=2024"
+```
+
+---
+
+## Team Coaches
+
+**UNVERIFIED** — Returns coaching staff for a team.
+
+**Endpoint:** `GET /teams/{teamId}/coaches`
+
+| Parameter | Required | Description | Example |
+|-----------|----------|-------------|---------|
+| `teamId` | ✅ (path) | Team ID | `119` |
+| `season` | ❌ | Season year | `2025` |
+| `date` | ❌ | Coaches as of date | `2025-04-01` |
+| `fields` | ❌ | Fields to return | — |
+
+```bash
+# Dodgers 2025 coaching staff
+curl "https://statsapi.mlb.com/api/v1/teams/119/coaches?season=2025"
+```
+
+---
+
+## Team Personnel
+
+**UNVERIFIED** — Returns front office and personnel for a team.
+
+**Endpoint:** `GET /teams/{teamId}/personnel`
+
+```bash
+curl "https://statsapi.mlb.com/api/v1/teams/119/personnel"
+```
+
+---
+
+## Team Uniforms
+
+**UNVERIFIED** — Returns uniform information for a team's season.
+
+**Endpoint:** `GET /uniforms/team`
+
+| Parameter | Required | Description | Example |
+|-----------|----------|-------------|---------|
+| `teamIds` | ✅ | Comma-separated team IDs | `119` |
+| `season` | ❌ | Season year | `2025` |
+| `fields` | ❌ | Fields to return | — |
+
+```bash
+curl "https://statsapi.mlb.com/api/v1/uniforms/team?teamIds=119&season=2025"
+```
