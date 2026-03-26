@@ -1,0 +1,26 @@
+feat: add mlb_service Django REST API
+
+Production-ready Django 5 service mirroring espn_service architecture.
+
+Structure:
+- config/ — celery, urls, asgi, wsgi, settings/{base, local, test, production}
+- clients/mlb_client.py — httpx + tenacity wrapper for statsapi.mlb.com
+- apps/core/ — RequestIDMiddleware, StructuredLoggingMiddleware, HealthCheckView, custom exceptions
+- apps/mlb/ — 6 models (Venue, Team, Player, Game, Standing, Transaction), DRF serializers, filters, viewsets, admin, migrations
+- apps/ingest/ — 5 ingestion services, 4 Celery tasks, 4 POST trigger endpoints
+- tests/ — 24 passing tests (API + MLBClient unit tests)
+
+Infrastructure:
+- Dockerfile (2-stage, gunicorn, non-root)
+- docker-compose.yml (web + db + redis + celery + celery-beat, ports 8001/5433/6380)
+- Makefile (install, migrate, test, lint, celery, ingest shortcuts)
+- pyproject.toml (same stack as espn_service: Django 5, DRF, Celery, httpx, structlog)
+- .env.example
+
+Celery beat schedule:
+- MLB schedule — hourly
+- Standings — daily
+- Teams + venues — weekly
+- Transactions — every 6 hours
+
+Test suite: 24/24 passing
