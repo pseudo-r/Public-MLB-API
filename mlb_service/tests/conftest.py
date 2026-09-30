@@ -2,10 +2,11 @@
 
 from __future__ import annotations
 
-import pytest
-from django.test import TestCase
+from datetime import UTC
 
-from apps.mlb.models import Game, Player, Standing, Team, Transaction, Venue
+import pytest
+
+from apps.mlb.models import Game, Player, Standing, Team, Venue
 
 
 @pytest.fixture
@@ -75,11 +76,11 @@ def player(db, team_dodgers):
 
 @pytest.fixture
 def game(db, team_dodgers, team_yankees, venue):
-    from datetime import datetime, timezone
+    from datetime import datetime
 
     return Game.objects.create(
         mlb_pk=745444,
-        game_date=datetime(2025, 4, 1, 22, 10, tzinfo=timezone.utc),
+        game_date=datetime(2025, 4, 1, 22, 10, tzinfo=UTC),
         official_date="2025-04-01",
         game_type="R",
         season=2025,

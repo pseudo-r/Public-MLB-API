@@ -1,11 +1,9 @@
 """Unit tests for MLBClient."""
 
 import pytest
-import httpx
 from pytest_httpx import HTTPXMock
 
 from clients.mlb_client import MLBClient
-
 
 BASE = "https://statsapi.mlb.com/api/v1"
 

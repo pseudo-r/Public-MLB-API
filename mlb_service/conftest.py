@@ -1,6 +1,4 @@
 """Root conftest — sets Django settings for all tests."""
-import django
-from django.conf import settings
 
 
 def pytest_configure():

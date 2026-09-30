@@ -2,13 +2,23 @@
 
 from datetime import date
 
+from django.conf import settings
 from drf_spectacular.utils import extend_schema
+from rest_framework.permissions import AllowAny, IsAdminUser
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 
-class IngestTeamsView(APIView):
+class IngestionView(APIView):
+    """Staff-only ingestion; opt-out is intended for isolated tests only."""
+
+    def get_permissions(self):
+        permission = IsAdminUser if getattr(settings, "INGEST_REQUIRE_STAFF", True) else AllowAny
+        return [permission()]
+
+
+class IngestTeamsView(IngestionView):
     """Trigger MLB team + venue ingestion."""
 
     @extend_schema(
@@ -25,7 +35,7 @@ class IngestTeamsView(APIView):
         return Response({"venues": venue_result.to_dict(), "teams": team_result.to_dict()})
 
 
-class IngestScheduleView(APIView):
+class IngestScheduleView(IngestionView):
     """Trigger MLB schedule ingestion for a date."""
 
     @extend_schema(
@@ -42,7 +52,7 @@ class IngestScheduleView(APIView):
         return Response({"date": date_str, **result.to_dict()})
 
 
-class IngestStandingsView(APIView):
+class IngestStandingsView(IngestionView):
     """Trigger MLB standings ingestion."""
 
     @extend_schema(
@@ -64,7 +74,7 @@ class IngestStandingsView(APIView):
         return Response({"season": season, **result.to_dict()})
 
 
-class IngestTransactionsView(APIView):
+class IngestTransactionsView(IngestionView):
     """Trigger MLB transaction ingestion."""
 
     @extend_schema(

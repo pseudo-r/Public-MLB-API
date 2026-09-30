@@ -7,14 +7,14 @@ ESPNClient architecture from espn_service.
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from datetime import date, datetime
 from typing import Any
 
 import httpx
 import structlog
 from django.conf import settings
-from tenacity import retry, stop_after_attempt, wait_exponential
+from tenacity import retry, retry_if_exception, stop_after_attempt, wait_exponential
 
 logger = structlog.get_logger(__name__)
 
@@ -90,6 +90,9 @@ class MLBClient:
         """Execute a GET request with retry and structured logging."""
 
         @retry(
+            retry=retry_if_exception(lambda exc: isinstance(exc, httpx.TransportError) or (
+                isinstance(exc, httpx.HTTPStatusError) and exc.response.status_code >= 500
+            )),
             stop=stop_after_attempt(self.max_retries),
             wait=wait_exponential(multiplier=1, min=1, max=10),
             reraise=True,
@@ -249,7 +252,7 @@ class MLBClient:
 
     def get_game_feed(self, game_pk: int) -> APIResponse:
         """GET /game/{gamePk}/feed/live."""
-        return self._get(f"game/{game_pk}/feed/live")
+        return self._get(f"../v1.1/game/{game_pk}/feed/live")
 
     def get_game_boxscore(self, game_pk: int) -> APIResponse:
         """GET /game/{gamePk}/boxscore."""
@@ -289,6 +292,19 @@ class MLBClient:
         if season:
             params["season"] = season
         return self._get("stats/leaders", params)
+
+    def get_team_roster(self, team_id: int, season: int | None = None) -> APIResponse:
+        """Team roster, optionally for a historical season."""
+        return self._get(f"teams/{team_id}/roster", {"season": season} if season else None)
+
+    def get_game_play_by_play(self, game_pk: int) -> APIResponse:
+        """Detailed plays without the full v1.1 live feed."""
+        return self._get(f"game/{game_pk}/playByPlay")
+
+    def get_divisions(self, sport_id: int = 1) -> APIResponse:
+        """Division reference data."""
+        return self._get("divisions", {"sportId": sport_id})
+
 
     def get_draft(self, year: int) -> APIResponse:
         """GET /draft/{year}."""

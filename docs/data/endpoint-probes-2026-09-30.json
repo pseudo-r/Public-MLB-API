@@ -1,0 +1,52 @@
+[
+  {
+    "url": "https://statsapi.mlb.com/api/v1/divisions?sportId=1",
+    "checked_at": "2026-09-30T14:20:04.353697+00:00",
+    "status": 200,
+    "content_type": "application/json;charset=UTF-8",
+    "top_level_keys": [
+      "copyright",
+      "divisions"
+    ]
+  },
+  {
+    "url": "https://statsapi.mlb.com/api/v1/teams/147/roster?season=2026",
+    "checked_at": "2026-09-30T14:20:04.356425+00:00",
+    "status": 200,
+    "content_type": "application/json;charset=UTF-8",
+    "top_level_keys": [
+      "copyright",
+      "roster",
+      "link",
+      "teamId",
+      "rosterType"
+    ]
+  },
+  {
+    "url": "https://statsapi.mlb.com/api/v1.1/game/777001/feed/live",
+    "checked_at": "2026-09-30T14:20:04.357364+00:00",
+    "status": 200,
+    "content_type": "application/json;charset=UTF-8",
+    "top_level_keys": [
+      "copyright",
+      "gamePk",
+      "link",
+      "metaData",
+      "gameData",
+      "liveData"
+    ]
+  },
+  {
+    "url": "https://statsapi.mlb.com/api/v1/game/777001/playByPlay",
+    "checked_at": "2026-09-30T14:20:04.359087+00:00",
+    "status": 200,
+    "content_type": "application/json;charset=UTF-8",
+    "top_level_keys": [
+      "copyright",
+      "allPlays",
+      "currentPlay",
+      "scoringPlays",
+      "playsByInning"
+    ]
+  }
+]

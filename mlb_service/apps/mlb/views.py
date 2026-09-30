@@ -1,6 +1,6 @@
 """DRF ViewSets for MLB data."""
 
-from django.db.models import Q, QuerySet
+from django.db.models import QuerySet
 from drf_spectacular.utils import OpenApiParameter, extend_schema
 from rest_framework import viewsets
 from rest_framework.decorators import action

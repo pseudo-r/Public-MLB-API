@@ -14,7 +14,7 @@ import structlog
 from django.db import transaction
 
 from apps.core.exceptions import IngestionError
-from apps.mlb.models import Game, Player, Standing, Team, Transaction, Venue
+from apps.mlb.models import Game, Standing, Team, Transaction, Venue
 from clients.mlb_client import MLBClient, get_mlb_client
 
 logger = structlog.get_logger(__name__)

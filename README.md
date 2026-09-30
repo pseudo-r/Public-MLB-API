@@ -1,5 +1,7 @@
 # MLB Stats API Documentation
 
+Service maintenance: [September 2026 audit, new routes, verification, and limitations](docs/audit-2026-09-30.md).
+
 **Disclaimer:** This is documentation for MLB's undocumented public API. I am not affiliated with MLB. Use responsibly and follow MLB's terms of service.
 
 [![CI](https://github.com/pseudo-r/Public-MLB-API/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/pseudo-r/Public-MLB-API/actions/workflows/ci.yml)
