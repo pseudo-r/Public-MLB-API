@@ -1,5 +1,7 @@
 # MLB Stats API Documentation
 
+> **Unofficial project and usage scope:** This repository contains endpoint documentation and reference code. It is not affiliated with or endorsed by the upstream providers and does not offer a hosted API or data service. “Public” describes endpoint reachability, not permission to collect, reuse, or redistribute data. See [project scope and permitted use](PROJECT_SCOPE.md) before using the examples.
+
 Service maintenance: [September 2026 audit, new routes, verification, and limitations](docs/audit-2026-09-30.md).
 
 **Disclaimer:** This is documentation for MLB's undocumented public API. I am not affiliated with MLB. Use responsibly and follow MLB's terms of service.
